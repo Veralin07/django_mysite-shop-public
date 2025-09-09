@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Обо мне</h1>
+
+{% if profile.avatar %}
+  <img src="{{ profile.avatar.url }}" alt="Avatar" width="150" />
+{% else %}
+  <p>Аватар отсутствует.</p>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Изменить аватар</button>
+</form>
+{% endblock %}

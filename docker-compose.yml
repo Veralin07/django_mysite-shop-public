@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: gunicorn mysite.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://loki:3100/loki/api/v1/push"
+
+  loki:
+    image: grafana/loki:2.8.2
+    ports:
+      - "3100:3100"
+
+  grafana:
+    image: grafana/grafana:9.2.3
+    ports:
+      - "3000:3000"
+    depends_on:
+      - loki
+

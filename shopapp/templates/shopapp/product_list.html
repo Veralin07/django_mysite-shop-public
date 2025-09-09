@@ -1,0 +1,20 @@
+{% extends "shopapp/base.html" %}
+{% block content %}
+<h1>Список продуктов</h1>
+
+<ul>
+    {% for product in products %}
+    <li>
+        <a href="{% url 'shopapp:product_detail' product.pk %}">{{ product.name }}</a>
+    </li>
+    {% empty %}
+    <li>Продуктов пока нет.</li>
+    {% endfor %}
+</ul>
+
+{# Показываем ссылку "Создать новый продукт" только пользователям с разрешением add_product #}
+{% if perms.shopapp.add_product %}
+    <a href="{% url 'shopapp:product_create' %}">Создать новый продукт</a>
+{% endif %}
+
+{% endblock %}

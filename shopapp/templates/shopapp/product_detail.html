@@ -1,0 +1,29 @@
+{% load i18n %}
+{% extends "shopapp/base.html" %}
+{% block content %}
+
+<h1>{% translate product.name %}</h1>
+
+<p>{{ product.description }}</p>
+
+<p>
+    {% blocktranslate %}
+        Цена:
+    {% endblocktranslate %}
+    {{ product.price }} ₽
+</p>
+
+{% blocktrans count num_images=product.images.count %}
+    В товаре {{ num_images }} изображение.
+{% plural %}
+    В товаре {{ num_images }} изображений.
+{% endblocktrans %}
+
+<p>
+  <a href="{% url 'shopapp:product_list' %}">{% translate "Вернуться к списку продуктов" %}</a> |
+  <a href="{% url 'shopapp:product_update' product.pk %}">{% translate "Обновить продукт" %}</a> |
+  <a href="{% url 'shopapp:product_archive' product.pk %}">{% translate "Архивировать продукт" %}</a>
+</p>
+
+{% endblock %}
+

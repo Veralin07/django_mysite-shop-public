@@ -1,0 +1,24 @@
+{% extends "shopapp/base.html" %}
+{% block content %}
+<h1>Список заказов</h1>
+<ul>
+    {% for order in orders %}
+    <li>
+        <a href="{% url 'order_detail' order.pk %}">Заказ {{ order.pk }}</a> — {{ order.user.get_username }}
+        Продукты:
+        {% for product in order.products.all %}
+            {{ product.name }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+            Нет продуктов
+        {% endfor %}
+
+    </li>
+    {% empty %}
+    <li>Заказов пока нет.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'shopapp:order_detail' order.pk %}">Заказ {{ order.pk }}</a>
+<a href="{% url 'shopapp:order_create' %}">Создать новый заказ</a>
+
+{% endblock %}
+
