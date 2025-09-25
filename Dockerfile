@@ -3,7 +3,7 @@ FROM python:3.11-slim
 WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
-ENV PIPENV_VENV_IN_PROJECT=0  # отключение создания виртуального окружения Pipenv
+ENV PIPENV_VENV_IN_PROJECT=0
 
 COPY Pipfile Pipfile.lock /app/
 

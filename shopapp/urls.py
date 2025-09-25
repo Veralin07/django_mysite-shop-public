@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import orders_export_view, UserOrdersListView, UserOrdersExportView
+from .views import orders_export_view
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from .api import ProductViewSet, OrderViewSet
@@ -32,7 +32,4 @@ urlpatterns = [
     path('', include(router.urls)),
 
     path('products/latest/feed/', LatestProductsFeed(), name='products_feed'),
-
-    path('users/<int:user_id>/orders/', UserOrdersListView.as_view(), name='user_orders_list'),
-    path('users/<int:user_id>/orders/export/', UserOrdersExportView.as_view(), name='user_orders_export'),
 ]
