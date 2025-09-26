@@ -17,15 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
-from shopapp.views import upload_file_view  # если upload_file_view определён здесь
 from django.conf import settings
 from django.conf.urls.static import static
-from django.conf.urls.i18n import i18n_patterns
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
-from rest_framework.permissions import AllowAny
-from drf_spectacular.views import SpectacularRedocView
 from django.contrib.sitemaps.views import sitemap
 from shopapp.sitemaps import ShopSitemap
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
 
 sitemaps = {
@@ -33,28 +29,21 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path('i18n/', include('django.conf.urls.i18n')),  # для смены языка через URL
-
+    path('i18n/', include('django.conf.urls.i18n')),
     path('admin/', admin.site.urls),
 
-    # Редирект с корня '/' на '/shop/products/'
-    path('', RedirectView.as_view(url='/shop/products/', permanent=False), name='index'),
+    # Редирект с корня сайта на /shop/
+    path('', RedirectView.as_view(url='/shop/', permanent=False), name='index'),
 
-    # Основное приложение с префиксом shop/
+    # Основное приложение shopapp по пути 'shop/'
     path('shop/', include('shopapp.urls')),
 
-    # Путь для загрузки файла
-    path('upload/', upload_file_view, name='upload'),
+    # Если upload_file_view в shopapp, дополнительный путь не нужен
 
     path('accounts/', include('myauth.urls')),
-
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-
-    path('api/schema/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger'),
-
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-
-    path('shopapp/', include('shopapp.urls')),
 
     path('blog/', include('blogapp.urls')),
 
@@ -63,7 +52,5 @@ urlpatterns = [
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+    urlpatterns = [path('__debug__/', include(debug_toolbar.urls))] + urlpatterns
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

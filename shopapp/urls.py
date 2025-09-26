@@ -1,11 +1,9 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from .views import orders_export_view
 from rest_framework.routers import DefaultRouter
-from django.urls import path, include
 from .api import ProductViewSet, OrderViewSet
 from .feeds import LatestProductsFeed
-
 
 app_name = 'shopapp'
 
@@ -14,7 +12,9 @@ router.register(r'products', ProductViewSet, basename='product')
 router.register(r'orders', OrderViewSet, basename='order')
 
 urlpatterns = [
-    # path('', index, name='index'),
+    # Путь для главной страницы приложения в /shop/
+    path('', views.ProductListView.as_view(), name='product_list'),
+
     path('products/', views.ProductListView.as_view(), name='product_list'),
     path('products/<int:pk>/', views.ProductDetailView.as_view(), name='product_detail'),
     path('products/create/', views.ProductCreateView.as_view(), name='product_create'),
@@ -29,7 +29,9 @@ urlpatterns = [
 
     path('upload/', views.upload_file_view, name='upload'),
     path('orders/export/', orders_export_view, name='orders_export'),
-    path('', include(router.urls)),
 
     path('products/latest/feed/', LatestProductsFeed(), name='products_feed'),
+
+    # Автоматически добавленные маршруты REST API
+    path('', include(router.urls)),
 ]
