@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y curl \
     && apt-get install -y nodejs
 
 # Переходим в папку с фронтендом и устанавливаем npm-зависимости
-WORKDIR /app/frontend
+WORKDIR /shopapp/templates/shopapp
 RUN npm install
 RUN npm run build
 
