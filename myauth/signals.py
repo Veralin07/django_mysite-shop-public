@@ -7,4 +7,8 @@ from .models import Profile
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+    else:
+        # Проверка, если профиль с таким пользователем уже есть, не создавать заново
+        if not Profile.objects.filter(user=instance).exists():
+            Profile.objects.create(user=instance)
 
