@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-tni1bn$0&e@bj)wr1zkv&n^3bo!l3t1)5u&d%f(d+$a97(%0xg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['5.129.211.114', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['5.129.211.114', '77.95.206.205', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -200,4 +200,5 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'API description',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+
 }
