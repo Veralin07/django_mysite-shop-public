@@ -10,10 +10,9 @@ services:
       - "8000:8000"
     environment:
       - DEBUG=1
+      - PYTHONPATH=/app
     logging:
-      driver: loki
-      options:
-        loki-url: "http://loki:3100/loki/api/v1/push"
+      driver: json-file
 
   loki:
     image: grafana/loki:2.8.2
@@ -26,4 +25,3 @@ services:
       - "3000:3000"
     depends_on:
       - loki
-
